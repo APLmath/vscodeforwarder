@@ -1,7 +1,31 @@
 <!DOCTYPE html>
 
-Forwarding to VS Code...
+<style>
+#close {
+  display: none;
+}
+
+.complete #close {
+  display: inherit;
+}
+</style>
+
+<div id="main">
+  Forwarding to VS Code...
+  <div id="close">
+    You may now close this tab.
+  </div>
+</div>
 
 <script>
-console.log(window.location.href);
+var url = window.location.href;
+var origin = window.location.origin;
+if (url.startsWith(origin)) {
+  window.setTimeout(function() {
+    var urlPath = url.substring(origin.length + 1);
+    var vscodeUri = 'vscode://' + urlPath;
+    window.open(vscodeUri);
+    document.getElementById('main').classList.add('complete');
+  }, 3000);
+}
 </script>
